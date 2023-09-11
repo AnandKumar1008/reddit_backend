@@ -5,6 +5,7 @@ const url = "mongoose:/localhost:";
 require("dotenv").config();
 // Connection Establishing To DataBase
 // console.log(process.env.MONGO_URI);
+const port = process.env.PORT || 1080;
 const connectDb = async () => {
   await mongoose.connect(process.env.MONGO_URI || "mongodb://0.0.0.0/reddit", {
     useNewUrlParser: true,
@@ -19,4 +20,4 @@ connectDb()
     console.log("Error", err);
   });
 //
-app.listen(1080, () => console.log("Server is running..."));
+app.listen(port, () => console.log("Server is running...", port));
