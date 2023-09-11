@@ -94,7 +94,7 @@ const login = async (req, res) => {
 // }
 //chek for login of user
 const firebaseLogin = async (req, res) => {
-  const { email, username, userPhoto } = req.body;
+  const { email, userName, userPhoto } = req.body;
   try {
     const user = await Users.findOne({ email });
     if (user) {
@@ -114,12 +114,12 @@ const firebaseLogin = async (req, res) => {
     }
     const newUser = await Users.create({
       email,
-      username,
+      userName,
       userPhoto,
       login: true,
       password: userPhoto,
     });
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
     res.status(200).json({ status: "success", data: newUser, token: token });
