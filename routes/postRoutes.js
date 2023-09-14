@@ -3,8 +3,10 @@ const multer = require("multer");
 // const upload = multer({ dest: "uploads/" });
 const {
   uploadPost,
-  getPost,
+
   allPost,
+  noUserPost,
+  getPost,
 } = require("../controllers/postControllers");
 const router = express.Router();
 
@@ -20,6 +22,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 router.post("/upload", upload.single("image"), uploadPost);
+router.post("/nouser", noUserPost);
 router.get("/all", allPost);
-router.post("/:id", getPost);
+router.get("/:id", getPost);
 module.exports = router;

@@ -14,6 +14,10 @@ const postSchema = mongoose.Schema(
       type: String,
       default: "",
     },
+    img: {
+      type: String,
+      default: "",
+    },
     userPhoto: {
       type: String,
       default: "",

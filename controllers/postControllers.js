@@ -1,10 +1,16 @@
 const Posts = require("../models/post");
-// const
-
+require("dotenv").config();
 const uploadPost = async (req, res) => {
   try {
-    const data = await Posts.create({ ...req.body, image: req.file?.path });
-    console.log(data);
+    const path = req.file?.path
+      ? `${process.env.BASE_URL}/${req.file.path}`
+      : "";
+
+    const data = await Posts.create({
+      ...req.body,
+      image: path,
+    });
+
     res.status(200).json({
       status: "success",
       data,
@@ -17,10 +23,29 @@ const uploadPost = async (req, res) => {
     });
   }
 };
+//upload existing post if the user tries to comment on that post
+const noUserPost = async (req, res) => {
+  try {
+    const data = await Posts.create({ ...req.body });
+
+    res.status(200).json({
+      status: "success",
+      data,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      status: "success",
+      message: error,
+    });
+  }
+};
+//here is its end
+
 const getPost = async (req, res) => {
   const { id } = req.params;
   try {
-    const data = await Posts.find({ user: id });
+    const data = await Posts.findById(id);
     res.status(200).json({ status: "success", data });
   } catch (error) {
     res.status(400).json({
@@ -31,17 +56,23 @@ const getPost = async (req, res) => {
 };
 
 const allPost = async (req, res) => {
+  const { page = 1, pageSize = 15 } = req.query;
+
   try {
-    const posts = await Posts.find({});
-    res.status(200).json({
-      status: "success",
-      data: posts,
-    });
+    const skip = (page - 1) * pageSize;
+
+    const posts = await Posts.find()
+      .skip(skip)
+      .limit(parseInt(pageSize))
+      .exec();
+
+    res.status(200).json({ status: "success", data: posts });
   } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      message: error,
+    console.error(error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
     });
   }
 };
-module.exports = { uploadPost, getPost, allPost };
+module.exports = { uploadPost, getPost, allPost, noUserPost };
