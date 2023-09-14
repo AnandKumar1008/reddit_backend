@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const saltRound = 10;
 const signup = async (req, res) => {
-  const { email, password, username, userPhoto = "" } = req.body;
-  if (!email || !password || !username) {
+  const { email, password, userName, userPhoto = "" } = req.body;
+  if (!email || !password || !userName) {
     return res.status(400).json({
       status: "fail",
       message: "All fields are required",
@@ -25,7 +25,7 @@ const signup = async (req, res) => {
     const newUser = await Users.create({
       email,
       password: hashPassword,
-      username,
+      userName,
       userPhoto,
     });
     res.status(200).json({
