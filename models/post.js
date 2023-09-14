@@ -18,13 +18,17 @@ const postSchema = mongoose.Schema(
       type: String,
       default: "",
     },
-    userPhoto: {
-      type: String,
-      default: "",
-    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
+    },
+    video_url: {
+      type: String,
+      default: "",
+    },
+    thumbnail: {
+      type: String,
+      default: "",
     },
     vote: {
       type: Number,
