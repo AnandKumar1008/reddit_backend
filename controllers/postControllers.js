@@ -62,6 +62,7 @@ const allPost = async (req, res) => {
     const skip = (page - 1) * pageSize;
 
     const posts = await Posts.find()
+      .populate("user")
       .skip(skip)
       .limit(parseInt(pageSize))
       .exec();
