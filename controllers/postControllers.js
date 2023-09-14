@@ -56,7 +56,7 @@ const getPost = async (req, res) => {
 };
 
 const allPost = async (req, res) => {
-  const { page = 1, pageSize = 15 } = req.query;
+  const { page = 1, pageSize = 7 } = req.query;
 
   try {
     const skip = (page - 1) * pageSize;
