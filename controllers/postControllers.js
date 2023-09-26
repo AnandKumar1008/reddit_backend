@@ -59,6 +59,7 @@ const allPost = async (req, res) => {
   const { page = 1, pageSize = 7 } = req.query;
 
   try {
+    const totalCount = await Posts.countDocuments();
     const skip = (page - 1) * pageSize;
 
     const posts = await Posts.find()

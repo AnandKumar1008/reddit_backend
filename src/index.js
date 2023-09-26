@@ -1,7 +1,9 @@
 const app = require("./app");
+
 const mongoose = require("mongoose");
-console.log("hare krishna");
+
 const url = "mongoose:/localhost:";
+
 require("dotenv").config();
 // Connection Establishing To DataBase
 // console.log(process.env.MONGO_URI);
