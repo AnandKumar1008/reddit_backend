@@ -63,6 +63,7 @@ const allPost = async (req, res) => {
     const skip = (page - 1) * pageSize;
 
     const posts = await Posts.find()
+      .sort({ createdAt: -1 })
       .populate("user")
       .skip(skip)
       .limit(parseInt(pageSize))
