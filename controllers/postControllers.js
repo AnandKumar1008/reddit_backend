@@ -2,7 +2,7 @@ const Posts = require("../models/post");
 require("dotenv").config();
 const uploadPost = async (req, res) => {
   try {
-    const path = req.file?.path
+    const path = req.file.path
       ? `${process.env.BASE_URL}/${req.file.path}`
       : "";
 
